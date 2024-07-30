@@ -21,13 +21,6 @@ pub struct InstantiateMsg {
 #[cw_serde]
 pub enum ExecuteMsg {
     // Uses the deprecated wasm_handler
-    MintLegacy {
-        id: String,
-        uri: Option<String>,
-        uri_hash: Option<String>,
-        data: Option<Binary>,
-        recipient: Option<String>,
-    },
     MintMutable {
         id: String,
         uri: Option<String>,
@@ -45,41 +38,7 @@ pub enum ExecuteMsg {
     ModifyData {
         id: String,
         data: Binary,
-    },
-    Burn {
-        id: String,
-    },
-    Freeze {
-        id: String,
-    },
-    Unfreeze {
-        id: String,
-    },
-   
-    ClassFreeze {
-        account: String,
-    },
-    ClassUnfreeze {
-        account: String,
-    },
-    AddToWhitelist {
-        id: String,
-        account: String,
-    },
-    RemoveFromWhitelist {
-        id: String,
-        account: String,
-    },
-    AddToClassWhitelist {
-        account: String,
-    },
-    RemoveFromClassWhitelist {
-        account: String,
-    },
-    Send {
-        id: String,
-        receiver: String,
-    },
+    }
 }
 #[cw_serde]
 #[derive(QueryResponses)]
@@ -90,18 +49,6 @@ pub enum QueryMsg {
     Class {},
     #[returns(ClassesResponse)]
     Classes { issuer: String },
-    #[returns(FrozenResponse)]
-    Frozen { id: String },
-    #[returns(ClassFrozenResponse)]
-    ClassFrozen { account: String },
-    #[returns(ClassFrozenAccountsResponse)]
-    ClassFrozenAccounts {},
-    #[returns(WhitelistedResponse)]
-    Whitelisted { id: String, account: String },
-    #[returns(WhitelistedAccountsForNFTResponse)]
-    WhitelistedAccountsForNft { id: String },
-    #[returns(ClassWhitelistedAccountsResponse)]
-    ClassWhitelistedAccounts {},
     #[returns(nft::BalanceResponse)]
     Balance { owner: String },
     #[returns(nft::OwnerResponse)]
@@ -116,8 +63,4 @@ pub enum QueryMsg {
     ClassNft {},
     #[returns(nft::ClassesResponse)]
     ClassesNft {},
-    #[returns(BurntNFTResponse)]
-    BurntNft { nft_id: String },
-    #[returns(BurntNFTsInClassResponse)]
-    BurntNftsInClass {},
 }
