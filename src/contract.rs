@@ -36,6 +36,8 @@ pub fn instantiate(
     set_contract_version(deps.storage, CONTRACT_NAME, CONTRACT_VERSION)?;
     initialize_owner(deps.storage, deps.api, Some(info.sender.as_ref()))?;
 
+    let royalty_rate = msg.royalty_rate.unwrap_or("0".to_string()); // Ensure default value
+
     let issue_msg = CoreumMsg::AssetNFT(assetnft::Msg::IssueClass {
         name: msg.name,
         symbol: msg.symbol.clone(),
@@ -44,7 +46,7 @@ pub fn instantiate(
         uri_hash: msg.uri_hash,
         data: msg.data,
         features: msg.features,
-        royalty_rate: msg.royalty_rate,
+        royalty_rate: Some(royalty_rate),
     });
 
     let class_id = format!("{}-{}", msg.symbol, env.contract.address).to_lowercase();
